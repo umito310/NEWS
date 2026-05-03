@@ -1,49 +1,14 @@
-const CACHE_NAME = "biaslens-v1";
-const SHELL_ASSETS = [
-  "/",
-  "/index.html",
-];
+const CACHE_NAME = "suginamis-mad-dog-v1";
 
-self.addEventListener("install", (e) => {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL_ASSETS))
-  );
-  self.skipWaiting();
-});
+self.addEventListener("install", () => self.skipWaiting());
 
 self.addEventListener("activate", (e) => {
   e.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    )
-  );
-  self.clients.claim();
-});
-
-self.addEventListener("fetch", (e) => {
-  const url = new URL(e.request.url);
-
-  // Let API calls go through network always
-  if (url.pathname.startsWith("/api/")) return;
-
-  // Network-first for navigation (HTML), cache-first for assets
-  if (e.request.mode === "navigate") {
-    e.respondWith(
-      fetch(e.request).catch(() => caches.match("/index.html"))
-    );
-    return;
-  }
-
-  e.respondWith(
-    caches.match(e.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(e.request).then((res) => {
-        if (res.ok) {
-          const clone = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
-        }
-        return res;
-      });
-    })
+    caches.keys()
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim())
   );
 });
+
+// Pass all requests straight to the network — no caching
+self.addEventListener("fetch", () => {});
