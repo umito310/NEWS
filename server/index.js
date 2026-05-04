@@ -74,22 +74,8 @@ const LATEST_FEEDS = [
     stripSuffix: false,
     type: "analysis",
   },
-  // ── Analysis / Left ─────────────────────────────
-  {
-    url: "https://news.google.com/rss/search?q=site:asahi.com+%E7%A4%BE%E8%AA%AC+OR+%E8%AB%96%E8%AA%AC&hl=ja&gl=JP&ceid=JP:ja",
-    source: "朝日新聞 社説",
-    perspective: "left",
-    stripSuffix: true,
-    type: "analysis",
-  },
-  // ── Analysis / Right ────────────────────────────
-  {
-    url: "https://news.google.com/rss/search?q=site:sankei.com+%E4%B8%BB%E5%BC%B5+OR+%E3%82%B3%E3%83%A9%E3%83%A0&hl=ja&gl=JP&ceid=JP:ja",
-    source: "産経新聞 主張",
-    perspective: "right",
-    stripSuffix: true,
-    type: "analysis",
-  },
+  // ── Analysis / Left (placeholder) ───────────────
+  // ── Analysis / Right (placeholder) ──────────────
 ];
 
 
