@@ -18,7 +18,7 @@ import NewsDebugPanel from "./components/dev/NewsDebugPanel";
 import "./App.css";
 
 // Set to false before shipping to users
-const DEBUG_NEWS = true;
+const DEBUG_NEWS = false;
 
 function resolveDummyArticles(topic) {
   return {
