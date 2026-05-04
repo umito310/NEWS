@@ -189,6 +189,30 @@ html, body {
 }
 .news-feed-section-header .section-title { margin: 0; }
 
+.feed-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--gray-200);
+  margin: 0 -2px;
+}
+.feed-tab {
+  flex: 1;
+  padding: 9px 4px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-400);
+  cursor: pointer;
+  letter-spacing: .02em;
+  transition: color .15s, border-color .15s;
+}
+.feed-tab--active {
+  color: var(--gray-800);
+  border-bottom-color: var(--gray-800);
+}
+
 .btn-refresh {
   background: none;
   border: none;

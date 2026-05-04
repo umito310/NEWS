@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { classifyArticleBySource } from "../services/newsService";
 
 function formatDate(dateStr) {
@@ -11,23 +12,10 @@ function formatDate(dateStr) {
   return `${d.getMonth() + 1}月${d.getDate()}日`;
 }
 
-function sortAndInterleave(articles) {
-  // Sort newest first
-  const sorted = [...articles].sort(
+function sortByDate(articles) {
+  return [...articles].sort(
     (a, b) => new Date(b.publishedAt || 0) - new Date(a.publishedAt || 0)
   );
-  // Prevent 3+ consecutive same source: if last 2 are same source as current,
-  // swap current with next article from a different source
-  for (let i = 2; i < sorted.length; i++) {
-    if (
-      sorted[i].source === sorted[i - 1].source &&
-      sorted[i].source === sorted[i - 2].source
-    ) {
-      const j = sorted.findIndex((a, idx) => idx > i && a.source !== sorted[i].source);
-      if (j !== -1) [sorted[i], sorted[j]] = [sorted[j], sorted[i]];
-    }
-  }
-  return sorted;
 }
 
 function NewsCard({ article, onSelect, isRead }) {
@@ -52,9 +40,25 @@ function NewsCard({ article, onSelect, isRead }) {
   );
 }
 
+const TABS = [
+  { id: "all",      label: "すべて" },
+  { id: "breaking", label: "速報" },
+  { id: "analysis", label: "特集" },
+];
+
 export default function TopicSelect({ topics, onSelect, onSelectArticle, memoCount, onShowMemoList, latestArticles, readArticleUrls, onRefresh }) {
+  const [activeTab, setActiveTab] = useState("all");
+
   const isLoading = latestArticles === null;
-  const feed = latestArticles ? sortAndInterleave(latestArticles) : [];
+
+  const feed = latestArticles
+    ? sortByDate(
+        activeTab === "all"
+          ? latestArticles
+          : latestArticles.filter((a) => a.type === activeTab)
+      )
+    : [];
+
   const showFeed = feed.length > 0;
 
   return (
@@ -75,16 +79,30 @@ export default function TopicSelect({ topics, onSelect, onSelectArticle, memoCou
         <span className="step-badge">メモ</span>
       </div>
 
-      {/* 今日のニュース */}
+      {/* ニュースフィード */}
       <div className="news-feed-section">
         <div className="news-feed-section-header">
-          <p className="section-title">今日のニュース</p>
+          <p className="section-title">ニュース</p>
           {!isLoading && (
             <button className="btn-refresh" onClick={onRefresh} aria-label="更新">
               ↺
             </button>
           )}
         </div>
+
+        {/* タブ */}
+        <div className="feed-tabs">
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              className={`feed-tab${activeTab === tab.id ? " feed-tab--active" : ""}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
         {isLoading ? (
           <p className="news-feed-loading">読み込み中...</p>
         ) : showFeed ? (
@@ -99,11 +117,13 @@ export default function TopicSelect({ topics, onSelect, onSelectArticle, memoCou
             ))}
           </div>
         ) : (
-          <p className="news-feed-empty">最新ニュースを取得できませんでした</p>
+          <p className="news-feed-empty">
+            {activeTab === "analysis" ? "特集・分析記事を取得できませんでした" : "最新ニュースを取得できませんでした"}
+          </p>
         )}
       </div>
 
-      {/* 固定トピック（常に表示） */}
+      {/* 固定トピック */}
       <p className="section-title">テーマを選んで読み比べる</p>
       <div className="topic-list">
         {topics.map((topic) => (

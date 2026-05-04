@@ -10,8 +10,10 @@ export const mediaBiasMap = {
   "時事通信": "center",
   "共同通信": "center",
   "毎日新聞デジタル": "center",
+  "東洋経済オンライン": "center",
   // Japanese — left
   "朝日新聞": "left",
+  "朝日新聞 社説": "left",
   "毎日新聞": "left",
   "東京新聞": "left",
   "リベラル新聞": "left",        // dummy
@@ -21,6 +23,7 @@ export const mediaBiasMap = {
   "教育平等ネットワーク": "left", // dummy
   // Japanese — right
   "産経新聞": "right",
+  "産経新聞 主張": "right",
   "日本経済新聞": "right",
   "保守経済新聞": "right",        // dummy
   "産業経済ジャーナル": "right",  // dummy

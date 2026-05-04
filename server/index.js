@@ -28,38 +28,67 @@ const PERSPECTIVE_LABELS = {
 // ─────────────────────────────────────────────
 
 const LATEST_FEEDS = [
-  // ── Center ──────────────────────────────────────
+  // ── Breaking / Center ───────────────────────────
   {
     url: "https://www3.nhk.or.jp/rss/news/cat4.xml",
     source: "NHK",
     perspective: "center",
     stripSuffix: false,
+    type: "breaking",
   },
   {
     url: "https://news.google.com/rss/search?q=bloomberg+%E7%B5%8C%E6%B8%88+%E6%97%A5%E6%9C%AC&hl=ja&gl=JP&ceid=JP:ja",
     source: "Bloomberg",
     perspective: "center",
     stripSuffix: true,
+    type: "breaking",
   },
   {
     url: "https://news.google.com/rss/search?q=reuters+%E6%97%A5%E6%9C%AC+%E7%B5%8C%E6%B8%88&hl=ja&gl=JP&ceid=JP:ja",
     source: "Reuters",
     perspective: "center",
     stripSuffix: true,
+    type: "breaking",
   },
-  // ── Left ────────────────────────────────────────
+  // ── Breaking / Left ─────────────────────────────
   {
     url: "https://www.asahi.com/rss/asahi/newsheadlines.rdf",
     source: "朝日新聞",
     perspective: "left",
     stripSuffix: false,
+    type: "breaking",
   },
-  // ── Right ───────────────────────────────────────
+  // ── Breaking / Right ────────────────────────────
   {
     url: "https://news.google.com/rss/search?q=site:sankei.com+%E6%94%BF%E6%B2%BB&hl=ja&gl=JP&ceid=JP:ja",
     source: "産経新聞",
     perspective: "right",
     stripSuffix: true,
+    type: "breaking",
+  },
+  // ── Analysis / Center ───────────────────────────
+  {
+    url: "https://toyokeizai.net/list/feed/rss",
+    source: "東洋経済オンライン",
+    perspective: "center",
+    stripSuffix: false,
+    type: "analysis",
+  },
+  // ── Analysis / Left ─────────────────────────────
+  {
+    url: "https://news.google.com/rss/search?q=site:asahi.com+%E7%A4%BE%E8%AA%AC+OR+%E8%AB%96%E8%AA%AC&hl=ja&gl=JP&ceid=JP:ja",
+    source: "朝日新聞 社説",
+    perspective: "left",
+    stripSuffix: true,
+    type: "analysis",
+  },
+  // ── Analysis / Right ────────────────────────────
+  {
+    url: "https://news.google.com/rss/search?q=site:sankei.com+%E4%B8%BB%E5%BC%B5+OR+%E3%82%B3%E3%83%A9%E3%83%A0&hl=ja&gl=JP&ceid=JP:ja",
+    source: "産経新聞 主張",
+    perspective: "right",
+    stripSuffix: true,
+    type: "analysis",
   },
 ];
 
@@ -82,11 +111,12 @@ function mapRssItem(item, feedConfig, index) {
   const title = cleanTitle(item.title, feedConfig.stripSuffix);
   const description = stripHtml(item.contentSnippet ?? item.content ?? item.summary ?? "");
   return {
-    id: `rss-${feedConfig.perspective}-${index}`,
+    id: `rss-${feedConfig.source.slice(0, 6)}-${index}`,
     topicId: "rss",
     perspective: feedConfig.perspective,
     perspectiveLabel: PERSPECTIVE_LABELS[feedConfig.perspective],
     source: feedConfig.source,
+    type: feedConfig.type ?? "breaking",
     title,
     description: description.length > 0 ? description : "",
     url: item.link ?? "",
