@@ -37,17 +37,17 @@ const LATEST_FEEDS = [
     type: "breaking",
   },
   {
-    url: "https://news.google.com/rss/search?q=bloomberg+%E7%B5%8C%E6%B8%88+%E6%97%A5%E6%9C%AC&hl=ja&gl=JP&ceid=JP:ja",
-    source: "Bloomberg",
+    url: "https://jp.reuters.com/rssFeed/topNews",
+    source: "Reuters",
     perspective: "center",
-    stripSuffix: true,
+    stripSuffix: false,
     type: "breaking",
   },
   {
-    url: "https://news.google.com/rss/search?q=reuters+%E6%97%A5%E6%9C%AC+%E7%B5%8C%E6%B8%88&hl=ja&gl=JP&ceid=JP:ja",
-    source: "Reuters",
-    perspective: "center",
-    stripSuffix: true,
+    url: "https://mainichi.jp/rss/etc/mainichi-flash.rss",
+    source: "毎日新聞",
+    perspective: "left",
+    stripSuffix: false,
     type: "breaking",
   },
   // ── Breaking / Left ─────────────────────────────
@@ -60,10 +60,10 @@ const LATEST_FEEDS = [
   },
   // ── Breaking / Right ────────────────────────────
   {
-    url: "https://news.google.com/rss/search?q=site:sankei.com+%E6%94%BF%E6%B2%BB&hl=ja&gl=JP&ceid=JP:ja",
+    url: "https://www.sankei.com/rss/news/flash/flash.xml",
     source: "産経新聞",
     perspective: "right",
-    stripSuffix: true,
+    stripSuffix: false,
     type: "breaking",
   },
   // ── Analysis / Center ───────────────────────────
