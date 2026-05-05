@@ -114,39 +114,14 @@ html, body {
 
 .topic-hero {
   text-align: center;
-  padding: 36px 0 20px;
+  padding: 28px 0 8px;
 }
-.logo-mark { font-size: 36px; margin-bottom: 14px; opacity: .75; }
-.app-title {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: .01em;
-  color: var(--gray-800);
-  line-height: 1.2;
+.app-logo-img {
+  width: 96px;
+  height: 96px;
+  border-radius: 20px;
+  object-fit: cover;
 }
-.app-subtitle {
-  font-size: 13px;
-  color: var(--gray-500);
-  margin-top: 10px;
-  line-height: 1.75;
-  letter-spacing: .01em;
-}
-
-.how-it-works {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 0 8px;
-  flex-wrap: wrap;
-}
-.step-badge {
-  font-size: 11px;
-  color: var(--gray-400);
-  letter-spacing: .04em;
-}
-.step-arrow { font-size: 10px; color: var(--gray-300); }
 
 .section-title {
   font-size: 10px;
@@ -794,6 +769,23 @@ html, body {
   letter-spacing: .01em;
 }
 .btn-article-skip:active { opacity: .6; }
+
+.btn-load-more {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  background: transparent;
+  color: var(--gray-500);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: .02em;
+  transition: background .15s, color .15s;
+  margin-top: 4px;
+}
+.btn-load-more:active { background: var(--gray-100); color: var(--gray-700); }
 
 .btn-memo-list {
   display: block;

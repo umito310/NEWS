@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { classifyArticleBySource } from "../services/newsService";
 
+const BATCH_SIZE = 20;
+
 function formatDate(dateStr) {
   if (!dateStr) return "";
   const d = new Date(dateStr);
@@ -48,6 +50,7 @@ const TABS = [
 
 export default function TopicSelect({ topics, onSelect, onSelectArticle, memoCount, onShowMemoList, latestArticles, readArticleUrls, onRefresh }) {
   const [activeTab, setActiveTab] = useState("all");
+  const [displayCount, setDisplayCount] = useState(BATCH_SIZE);
 
   const isLoading = latestArticles === null;
 
@@ -59,24 +62,18 @@ export default function TopicSelect({ topics, onSelect, onSelectArticle, memoCou
       )
     : [];
 
-  const showFeed = feed.length > 0;
+  const visibleFeed = feed.slice(0, displayCount);
+  const hasMore = feed.length > displayCount;
+
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    setDisplayCount(BATCH_SIZE);
+  };
 
   return (
     <div className="screen topic-screen">
       <div className="topic-hero">
-        <div className="logo-mark">📰</div>
-        <h1 className="app-title">Suginami's Mad Dog</h1>
-        <p className="app-subtitle">
-          同じニュースを3つの視点から読み比べて、<br />自分の考えを残そう。
-        </p>
-      </div>
-
-      <div className="how-it-works">
-        <span className="step-badge">記事を選ぶ</span>
-        <span className="step-arrow">›</span>
-        <span className="step-badge">3つの視点で読む</span>
-        <span className="step-arrow">›</span>
-        <span className="step-badge">メモ</span>
+        <img src="/IMG_2953.JPG" className="app-logo-img" alt="Suginami's Mad Dog" />
       </div>
 
       {/* ニュースフィード */}
@@ -96,7 +93,7 @@ export default function TopicSelect({ topics, onSelect, onSelectArticle, memoCou
             <button
               key={tab.id}
               className={`feed-tab${activeTab === tab.id ? " feed-tab--active" : ""}`}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => handleTabChange(tab.id)}
             >
               {tab.label}
             </button>
@@ -105,17 +102,27 @@ export default function TopicSelect({ topics, onSelect, onSelectArticle, memoCou
 
         {isLoading ? (
           <p className="news-feed-loading">読み込み中...</p>
-        ) : showFeed ? (
-          <div className="news-feed-list">
-            {feed.map((article, i) => (
-              <NewsCard
-                key={article.id ?? i}
-                article={article}
-                onSelect={onSelectArticle}
-                isRead={readArticleUrls?.has(article.url)}
-              />
-            ))}
-          </div>
+        ) : visibleFeed.length > 0 ? (
+          <>
+            <div className="news-feed-list">
+              {visibleFeed.map((article, i) => (
+                <NewsCard
+                  key={article.id ?? i}
+                  article={article}
+                  onSelect={onSelectArticle}
+                  isRead={readArticleUrls?.has(article.url)}
+                />
+              ))}
+            </div>
+            {hasMore && (
+              <button
+                className="btn-load-more"
+                onClick={() => setDisplayCount((c) => c + BATCH_SIZE)}
+              >
+                もっと見る
+              </button>
+            )}
+          </>
         ) : (
           <p className="news-feed-empty">
             {activeTab === "analysis" ? "特集・分析記事を取得できませんでした" : "最新ニュースを取得できませんでした"}
