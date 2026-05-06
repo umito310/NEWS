@@ -22,6 +22,7 @@ export const mediaBiasMap = {
   "平和市民フォーラム": "left",   // dummy
   "教育平等ネットワーク": "left", // dummy
   // Japanese — right
+  "JBpress": "right",
   "読売新聞": "right",
   "産経新聞": "right",
   "産経新聞 主張": "right",
@@ -31,8 +32,8 @@ export const mediaBiasMap = {
   "国家政策フォーラム": "right",  // dummy
   "安全保障政策研究": "right",    // dummy
   "財政健全化フォーラム": "right",// dummy
+  "NHK 国際": "center",
   // International — center
-  "AFPBB": "center",
   "Reuters": "center",
   "AP News": "center",
   "AP通信": "center",

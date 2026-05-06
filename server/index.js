@@ -37,8 +37,8 @@ const LATEST_FEEDS = [
     type: "breaking",
   },
   {
-    url: "https://www.afpbb.com/rss/3.0/afpbb/rss.xml",
-    source: "AFPBB",
+    url: "https://www3.nhk.or.jp/rss/news/cat6.xml",
+    source: "NHK 国際",
     perspective: "center",
     stripSuffix: false,
     type: "breaking",
@@ -60,11 +60,11 @@ const LATEST_FEEDS = [
   },
   // ── Breaking / Right ────────────────────────────
   {
-    url: "https://www.yomiuri.co.jp/rss/yomiuri_2.xml",
-    source: "読売新聞",
+    url: "https://jbpress.ismedia.jp/list/feed/rss",
+    source: "JBpress",
     perspective: "right",
     stripSuffix: false,
-    type: "breaking",
+    type: "analysis",
   },
   // ── Analysis / Center ───────────────────────────
   {
