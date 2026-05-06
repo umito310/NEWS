@@ -37,8 +37,8 @@ const LATEST_FEEDS = [
     type: "breaking",
   },
   {
-    url: "https://jp.reuters.com/rssFeed/topNews",
-    source: "Reuters",
+    url: "https://www.afpbb.com/rss/3.0/afpbb/rss.xml",
+    source: "AFPBB",
     perspective: "center",
     stripSuffix: false,
     type: "breaking",
@@ -60,8 +60,8 @@ const LATEST_FEEDS = [
   },
   // ── Breaking / Right ────────────────────────────
   {
-    url: "https://www.sankei.com/rss/news/flash/flash.xml",
-    source: "産経新聞",
+    url: "https://www.yomiuri.co.jp/rss/yomiuri_2.xml",
+    source: "読売新聞",
     perspective: "right",
     stripSuffix: false,
     type: "breaking",
